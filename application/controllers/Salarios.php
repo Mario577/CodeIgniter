@@ -6,7 +6,7 @@ class Salarios extends CI_Controller {
     public function pago(){
 
  
-        $empleados = array("Marcos"=>1200,"Elena"=>1200, "Douglas"=>600);
+        $empleados = array("Marcos"=>1100,"Elena"=>1200, "Douglas"=>600);
         $data = array('empleados'=> $empleados); 
 
         $this->load->view('vistasalarios',$data);
