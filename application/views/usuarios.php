@@ -1,8 +1,8 @@
 <h1> Tabla de Datos </h1>
-<form action="" method="post">
-dui<input type="text" id="nombre" /><br>
-Nombre <input type="text" id="nombre" /><br>
-Contraseña<input type="password" id="contra"/>
+<form name="formulario" action="Listas.php" method="get">
+dui<input type="text" name= "dui" id="dui" /><br>
+Nombre <input type="text" name="nombre" id="nombre" /><br>
+Contraseña<input type="password" name="contra" id="contra"/>
 <button type="submit">Enviar</button> 
 </form>
 <?php 
