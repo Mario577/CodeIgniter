@@ -13,7 +13,10 @@ class Listas extends CI_Controller {
         
     }
 
-
+    /*$number=$_GET["dui"];
+    $name=$_GET["nombre"];
+    $age=$_GET["contra"];*/
+    
 
 
 }
