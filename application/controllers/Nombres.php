@@ -14,4 +14,5 @@ class Nombres extends CI_Controller {
         $this->load->view('clientes',$data);
     
     }
+
 }
