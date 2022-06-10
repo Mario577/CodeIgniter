@@ -5,9 +5,13 @@ class Listas extends CI_Controller {
 
     public function Lista(){
 
-        $usuario = array('dui' =>"06369537-7, 02678987-9" ,'nombre'=>'mario, ana', 'edad'=>"20, 34");
-        $data = array('usuario' => $usuario,);
 
+        $this->load->model("empleadomodelo");
+
+        $datos = $this->empleadomodelo->getmodelo_bydui("06369577-7"); 
+        
+        $data = array('empleados'=> $datos); 
+        
         $this->load->view('usuarios',$data);
 
         
