@@ -17,6 +17,4 @@ class Listas extends CI_Controller {
     $name=$_GET["nombre"];
     $age=$_GET["contra"];*/
     
-
-
 }
