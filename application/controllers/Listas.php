@@ -1,12 +1,11 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH')OR exit('No direct script access allowed');
 
 class Listas extends CI_Controller {
 
 
     public function Lista(){
         
-        print_r($_POST);
         
         $this->load->model("empleadomodelo");
         
@@ -19,15 +18,28 @@ class Listas extends CI_Controller {
            
     }
 
-    /* public function getnumeros(){
+     public function getnumeros(){
 
-    $numeros = $_POST['numeros'];
+    $numeros = $_POST["numeros"];
+
+    if($numeros){
+
+        echo " no esta vacia . $numeros";
+    }
+
+    if(isset($_POST["numeros"])){
+
+        echo "Hola <b>. $_POST[numeros] .</b> esto paso";
+
+
+
+    }
 
 
 
 
 
-    }*/
+    }
 }
 
    
