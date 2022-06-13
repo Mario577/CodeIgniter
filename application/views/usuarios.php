@@ -1,23 +1,39 @@
+
 <h1>Tabla de Datos </h1>
-<form name="formulario" action="Listas.php" method="post" id="post">
-    Dui: <input type="text" name="numeros" id="dui_1" value="" /><input type="submit" value="Buscar" /><br>
-    </form>
+<?php 
+ echo form_open('Listas/Guardar', array('method' => 'POST'));
+ echo form_label('Dui:');
+ echo form_input('dui');
+ echo "<br>";
+ echo form_label('Nombre:');
+ echo form_input('nombre');
+ echo "<br>";
+ echo form_label('Edad:');
+ echo form_input('edad');
+ echo "<br>";
+ echo form_submit('submit', 'agregar');
+ echo form_close();
+?>
+<?= isset($sms) ? $sms : ''?>
     
         <table>
           <tr>
-            <td><a href=""></td>
-            <td><a href=""></td>
-            <td><a href=""></td>
+            <th>Dui</th>
+            <th>Nombre</th>
+            <th>Edad</th>
           </tr>
-        </table>
+       
 
-        <?php
-        foreach ($empleados as $row){ 
-                echo "$row->dui<br>";
-                echo "$row->nombre<br>";
-                echo "$row->edad <br>";
+       
+        <?php foreach ($empleados as $row){ 
+                echo "<tr>";
+                echo "<td> $row->dui </td><br>";
+                echo "<td>$row->nombre</td><br>";
+                echo "<td>$row->edad </td><br>";
+                echo "</tr>";
             
         }
-       
+        ?>
+        </table>
        
            

@@ -2,12 +2,16 @@
 defined('BASEPATH')OR exit('No direct script access allowed');
 
 class Listas extends CI_Controller {
+    public function __construct(){
+        parent:: __construct();
+          $this->load->model("empleadomodelo");
+    }
 
 
     public function Lista(){
         
         
-        $this->load->model("empleadomodelo");
+      
         
         $datos = $this->empleadomodelo->getmodelo_bydui(""); 
         
@@ -18,28 +22,21 @@ class Listas extends CI_Controller {
            
     }
 
-     public function getnumeros(){
+    public function Guardar(){
 
-    $numeros = $_POST["numeros"];
-
-    if($numeros){
-
-        echo " no esta vacia . $numeros";
-    }
-
-    if(isset($_POST["numeros"])){
-
-        echo "Hola <b>. $_POST[numeros] .</b> esto paso";
-
-
-
+        $document = $this->input->post('dui');
+        $name = $this->input->post('nombre');
+        $age = $this->input->post('edad');
+        $usuarios = array('dui' =>$document, 'nombre'=>$name, 'edad'=>$age);
+        if(!$this->empleadomodelo->insertar($usuarios)){
+            $usuarios['sms']= 'Ocurrio un error en con los datos del usuario';
+            $this->load->view('usuarios', $usuarios);
+        }
+        $usuarios['sms']= 'usuario añadido';
+        $this->load->view('usuarios', $usuarios);   
     }
 
 
-
-
-
-    }
 }
 
    
