@@ -38,13 +38,16 @@ class Listas extends CI_Controller {
         $data = array('empleados' =>$datos, 'infoclientes'=>$info1);
         $this->load->view('usuarios', $data, $usuarios);
     }
+    public function agregar(){
+        $this->load->view('agregarnuevo');
+       
+    }
 
     
 
         
         
 }
-
 
 
    
