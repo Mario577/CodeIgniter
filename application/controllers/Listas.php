@@ -11,15 +11,14 @@ class Listas extends CI_Controller {
     public function Lista(){
         
         
-      
-        
         $datos = $this->empleadomodelo->getmodelo_bydui(""); 
-        
-        $data = array('empleados'=> $datos,); 
-        
-        $this->load->view('usuarios',$data);
 
-           
+        $info1 = $this->empleadomodelo->clientes();
+        
+        $data = array('empleados'=> $datos, 'infoclientes'=>$info1);
+        
+        $this->load->view('usuarios', $data);
+        
     }
 
     public function Guardar(){
@@ -28,15 +27,24 @@ class Listas extends CI_Controller {
         $name = $this->input->post('nombre');
         $age = $this->input->post('edad');
         $usuarios = array('dui' =>$document, 'nombre'=>$name, 'edad'=>$age);
-        if(!$this->empleadomodelo->insertar($usuarios)){
+        $tablanombre = array('nombre'=>$name);
+        if(!$this->empleadomodelo->insertar($usuarios, $tablanombre)){
             $usuarios['sms']= 'Ocurrio un error en con los datos del usuario';
             $this->load->view('usuarios', $usuarios);
         }
         $usuarios['sms']= 'usuario añadido';
-        $this->load->view('usuarios', $usuarios);   
+        $datos = $this->empleadomodelo->getmodelo_bydui();
+        $info1 = $this->empleadomodelo->clientes();
+        $data = array('empleados' =>$datos, 'infoclientes'=>$info1);
+        $this->load->view('usuarios', $data, $usuarios);
     }
 
+    
 
+        
+        
 }
+
+
 
    

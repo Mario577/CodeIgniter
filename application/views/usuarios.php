@@ -22,18 +22,38 @@
             <th>Nombre</th>
             <th>Edad</th>
           </tr>
-       
+
 
        
         <?php foreach ($empleados as $row){ 
                 echo "<tr>";
-                echo "<td> $row->dui </td><br>";
-                echo "<td>$row->nombre</td><br>";
-                echo "<td>$row->edad </td><br>";
+                echo "<td> $row->dui </td>";
+                echo "<td>$row->nombre</td>";
+                echo "<td>$row->edad </td>";
                 echo "</tr>";
             
         }
         ?>
         </table>
-       
-           
+         <br>
+          <br>
+          <select name="datos_numeros">
+            <?php
+              foreach ($empleados as $dui){
+
+                echo "<option> $dui->dui </option>";
+
+              }       
+            ?>
+          </select> 
+          <br>
+          <select name="datos_clientes">
+            <?php
+              foreach ($infoclientes as $name){
+
+                echo "<option> $name->nombre </option>";
+                
+              }       
+            ?>
+          </select> 
+          
