@@ -84,6 +84,20 @@
     });   
     </script>
 
+---------------------------------------------------------------------------------------------------
+let fila1 = document.createElement('tr');
+                         let dui = document.getElementById("dui");
+                         let fila1_dato1 = document.createElement('td');
+                         fila1_dato1.innerHTML = informacion["dui"];
+                         let nombre = document.getElementById("nombre");
+                         let fila1_dato2 = document.createElement('td');
+                         fila1_dato2.innerHTML = informacion["nombre"];
+                         let edad = document.getElementById("edad")
+                         let fila1_dato3 = document.createElement('td');
+                         fila1_dato3.innerHTML = informacion["edad"];
 
+                         fila1.appendChild(fila1_dato1);
+                         fila1.appendChild(fila1_dato2);
+                         fila1.appendChild(fila1_dato3);
 
         */

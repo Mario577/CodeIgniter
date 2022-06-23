@@ -14,7 +14,7 @@
 
 <?= isset($sms) ? $sms : ''?>
     <div class="container">
-        <table class="table table-bordered">
+        <table id= "tabla1" class="table table-bordered">
           
           <tr class="info">
             <th>Dui</th>
@@ -25,7 +25,7 @@
  
         <?php foreach ($empleados as $row){ 
                 echo "<tr>";
-                echo "<td> $row->dui </td>";
+                echo "<td>$row->dui </td>";
                 echo "<td>$row->nombre</td>";
                 echo "<td>$row->edad </td>";
                 echo "</tr>";
@@ -33,7 +33,6 @@
         }
         ?>    
         </table>    
- 
         <div class="container-fluid">
             <h3 class="text-danger"> Nuevo Usuario</h3>
         </div>
@@ -44,21 +43,15 @@
                 <label for="Nombre"> Nombre:</label>  
                 <input class="form-control"type="text" name="nombre" id="nombre" placeholder="Nombre:"/><br>
                 <label for="Dui"> Edad:</label>  
-                <input class="form-control"type="text" name="edad" id="nombre" placeholder="Edad:"/><br>
+                <input class="form-control"type="text" name="edad" id="edad" placeholder="Edad:"/><br>
                 <button type="submit" class="btn btn-success" name= "Guardar" id="Guardar">Guardar</button>
                 
             </form>
         </div> 
-    
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-
- //var _dui = $('#dui').val();  
-    // cons]ole.log(_dui);
- // console.log(_datos.serialize());
-
-
     $('#Guardar').click(function() {  
+        $("#tabla1>tbody").append("<tr><td>"+ $('#dui').val() + "</td><td>"+ $('#nombre').val() + "</td><td>"+ $('#edad').val() + "</td></tr>");              
         event.preventDefault();
     var _datos = $('#form_1');  
     $.ajax({  
@@ -76,9 +69,7 @@
         }
     });      
     });   
-    </script>
-        
-        
+    </script>    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 </body>
 </html>

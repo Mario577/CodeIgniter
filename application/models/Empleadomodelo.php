@@ -12,8 +12,6 @@ class Empleadomodelo extends CI_Model
     // return  $this->db->query("SELECT * FROM clientes")->result();
     // return  $this->db->get("clientes")->result();
     //return  $this->db->get_where("clientes", array('dui' => "09875463-0"))->result();
-
-
     //$this->db->where('dui', $dui_);
     return  $this->db->get("clientes")->result();
   }
@@ -27,5 +25,10 @@ class Empleadomodelo extends CI_Model
 
   public function clientes(){
     return  $this->db->get("empleados")->result();
+  }
+  public function tabla(){
+    return  $this->db->get("clientes");
+    
+    
   }
 }
