@@ -100,4 +100,6 @@ let fila1 = document.createElement('tr');
                          fila1.appendChild(fila1_dato2);
                          fila1.appendChild(fila1_dato3);
 
+------------------------------------------------------------------------------------------------
+ 
         */
