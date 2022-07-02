@@ -101,5 +101,169 @@ let fila1 = document.createElement('tr');
                          fila1.appendChild(fila1_dato3);
 
 ------------------------------------------------------------------------------------------------
- 
+            let dui= $('#dui').val();
+            let esp= /\d{8}[\s-]\d{1}/gm;
+            let nombre= $('#nombre').val();
+            let edad= $('#edad').val();
+
+            if(dui == "" || dui.length<=10 ||!dui==/\d{8}[\s-]\d{1}/gm||  nombre == "" ||edad == ""||edad < 18){
+                $("#mensaje1").fadeIn();
+                $("#mensaje2").fadeIn();
+                $("#mensaje3").fadeIn();
+                $("#mensaje4").fadeIn();
+                return false;
+            }else{
+                $("#mensaje1").fadeOut();
+                $("#mensaje2").fadeOut();
+                $("#mensaje3").fadeOut();
+                $("#mensaje4").fadeOut();
+           }
+
+
+
+
+           // var informacion = _respuesta.tabla_datos;
+                        // $.each(informacion, function(i, value) {
+                        //     $('#tabla1').html($('#tabla1').html() + `
+                        //     <tr><td>${value.dui}</td><td>  
+                        //     ${value.nombre}  </td><td> 
+                        //     ${value.edad} </td></tr>
+                        //     `);
+
+                        //     console.log(i+":"+value);
+                            
+                        //  });
+
+                        //Funciona para validacion de correo  
+                        // var valemail = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/; 
+
+
+
+                           rules: {
+                dui:{
+                    required: true,
+                    minlength: 10,
+                    min: 18,
+                    max: 99
+                    
+                },
+                nombre: {
+                    required: true,
+                },
+                edad:{
+                    required: true,
+                    maxlength: 2,
+                    min: 18,
+                    max: 99
+                    
+                }
+            },
+            messages: {
+                dui:{
+                    required:"Ingresa un Dui",
+                    minlength:"Debe contener 10 caracteres inclyendo -"
+                },
+                nombre: {
+                    required: "Ingresa un Nombre",
+                },
+                edad: {
+                    required: "Ingresa tu edad",
+                    min: "Debes tener 18 años "
+                }
+            }
+
+----------------------------------------------------------------------------------------------------------
+<script>
+        $('#Guardar').click(function() {
+            event.preventDefault();
+            $("#form_1").validate({
+                rules: {
+                    dui: {
+                        required: true,
+                        minlength: 10,
+                        min: 18,
+                        max: 99
+
+                    },
+                    nombre: {
+                        required: true,
+                    },
+                    edad: {
+                        required: true,
+                        maxlength: 2,
+                        min: 18,
+                        max: 99
+
+                    }
+                },
+                messages: {
+                    dui: {
+                        required: "Ingresa un Dui",
+                        minlength: "Debe contener 10 caracteres inclyendo -"
+                    },
+                    nombre: {
+                        required: "Ingresa un Nombre",
+                    },
+                    edad: {
+                        required: "Ingresa tu edad",
+                        min: "Debes tener 18 años "
+                    }
+                }
+            });
+
+            var _datos = $('#form_1');
+            $.ajax({
+                url: 'http://localhost/CodeIgniter/index.php/Listas/guardar_by_ajax3',
+                data: _datos.serialize(),
+                type: 'POST',
+                success: function(reshhh) {
+                    let _respuesta = JSON.parse(reshhh);
+                    console.log(_respuesta);
+                    if (_respuesta.respuesta == true) {
+                        alert(_respuesta.msj)
+                        $('#tabla1').html(_respuesta.tabla_datos);
+                        
+                    } else {
+                        console.error(_respuesta.msj);
+                    }
+                }
+            });
+        });
+    </script>
+
+---------------------------------------------------------------------------------------------------------
+ $this->load->helper(array('form'));
+        $this->load->library('form_validation');
+        $config = array(
+            array(
+                'field' => 'dui',
+                'label' => 'Dui',
+                'rules' => 'required|exact_length[10]|alpha_dash',
+                $this->form_validation->set_message('rule2',  'Debe contener 10 caracteres incluyendo')
+            ),
+            array(
+                'field' => 'nombre',
+                'label' => 'Nombre',
+                'rules' => 'required',
+
+
+            ),
+            array(
+                'field' => 'edad',
+                'label' => 'Edad',
+                'rules' => 'required',
+
+            ),
+        );
+        $this->form_validation->set_rules($config);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('agregarnuevo3');
+        } else {
+            $this->load->library('table');
+                $listado = $this->empleadomodelo->tabla();
+                $template = array('table_open' => '<table  class="table" id="tabla1">');
+                $this->table->set_template($template);
+                $this->table->set_heading('Dui', 'Nombre', 'Edad');
+                $usuarios['tabla_datos'] = $this->table->generate($listado);
         */

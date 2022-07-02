@@ -15,20 +15,27 @@ class Empleadomodelo extends CI_Model
     //$this->db->where('dui', $dui_);
     return  $this->db->get("clientes")->result();
   }
-  public function insertar($datos){
+  //----------------------------------------------------------------------------------------
+  public function insertar($datos)
+  {
     if (!$this->db->insert('clientes', $datos)) {
-      
       return false;
     }
     return true;
   }
 
-  public function clientes(){
-    return  $this->db->get("empleados")->result();
+//-------------------------------------------------------------------------------------------
+
+  public function tabla()
+  {
+    return  $this->db->get("clientes")->result();
   }
-  public function tabla(){
-    return  $this->db->get("clientes");
-    
-    
+//-------------------------------------------------------------------------------------------
+
+  public function borrado($datob){
+    if(!$this->db->delete("clientes", array('dui' => $datob))){
+        return false;
+    }
+    return true;
   }
 }

@@ -7,27 +7,45 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0 , maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <title>Document</title>
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js"></script>
+
+    <style>
+        div.errores {
+            width: 300px;
+            margin: 0px;
+            padding: 10px;
+            border: 1px solid #3c6;
+            display: none;
+        }
+
+        .head {
+            height: 50px;
+            background-color: lightblue;
+            
+        }
+
+        .foot {
+            height: 50px;
+            background-color: lightblue;
+            font-weight: 700px;
+            font-family: sans-serif;
+        }
+
+    </style>
 </head>
-<style>
-    div.errores{
-    width:300px;
-    margin:0px;
-    padding:10px;
-    border:1px solid #3c6;
-    display:none;
-    }
-</style>
+ <header class="head"> <h1 class="text">Formulario para Dui</h1> </header>
 
 <body>
     <div class="container-fluid">
-        <h1 class="bg-info text-success">Tabla de Datos </h1>
+        <h3 class="bg-info text-success">Tabla de Datos </h3>
     </div>
 
     <?= isset($sms) ? $sms : '' ?>
     <div class="container">
 
-            <?= $tabla_datos ?>
+    
+        <?= $tabla_datos; ?>
 
     </div>
     <div class="container-fluid">
@@ -38,11 +56,11 @@
             <label> Dui:</label><br>
             <input class="form-control" type="text" name="dui" id="dui" placeholder="Dui:" minlength="10" maxlength="10" /><br>
             <div id="mensaje1" class="errores"> Debe contener 10 caracteres incluyendo :-</div>
-            
+
             <label> Nombre:</label><br>
-            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre:" onkeypress="return !(event.charCode >= 48 && event.charCode <= 57)"/><br>
+            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre:" onkeypress="return !(event.charCode >= 48 && event.charCode <= 57)" /><br>
             <div id="mensaje2" class="errores"> Ingresa un Nombre</div>
-        
+
             <label> Edad:</label><br>
             <input class="form-control" type="number" name="edad" id="edad" placeholder="Edad:" maxlength="2" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" /><br>
             <div id="mensaje3" class="errores"> Ingresa una Edad</div>
@@ -51,33 +69,10 @@
 
         </form>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         $('#Guardar').click(function() {
-            event.preventDefault();           
-            let dui= $('#dui').val();
-            let nombre= $('#nombre').val();
-            let edad= $('#edad').val();
-
-            if(dui == "" || dui.length<=10 ||  nombre == "" ||edad == ""||edad < 18){
-                $("#mensaje1").fadeIn();
-                $("#mensaje2").fadeIn();
-                $("#mensaje3").fadeIn();
-                $("#mensaje4").fadeIn();
-                return false;
-            }else{
-                $("#mensaje1").fadeOut();
-                $("#mensaje2").fadeOut();
-                $("#mensaje3").fadeOut();
-                $("#mensaje4").fadeOut();
-           }
-
-                    
-                
-            
-//Funciona para validacion de correo  
-// var valemail = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+            event.preventDefault();
             var _datos = $('#form_1');
             $.ajax({
                 url: 'http://localhost/CodeIgniter/index.php/Listas/guardar_by_ajax3',
@@ -90,25 +85,43 @@
                         alert(_respuesta.msj)
                         $('#tabla1').html(_respuesta.tabla_datos);
                         
-                        // var informacion = _respuesta.tabla_datos;
-                        // $.each(informacion, function(i, value) {
-                        //     $('#tabla1').html($('#tabla1').html() + `
-                        //     <tr><td>${value.dui}</td><td>  
-                        //     ${value.nombre}  </td><td> 
-                        //     ${value.edad} </td></tr>
-                        //     `);
-
-                        //     console.log(i+":"+value);
-                            
-                        //  });
-
                     } else {
                         console.error(_respuesta.msj);
                     }
                 }
             });
         });
+        $('.btn-danger').click(function(){
+            event.preventDefault();
+            console.log(event.target.parentNode.parentNode.remove);
+           /* var _delete = $('#eliminar');
+            $.ajax({
+              url: 'http://localhost/CodeIgniter/index.php/Listas/eliminar',
+              data: _delete.serialize(),
+              type: 'POST',
+              success: function(del){
+                let _remover = JSON.parse(del);
+                 console.log(_remover);
+                 if(_remover.respuesta == true){
+                  alert(_remover.msj)
+                 }else{
+                  console.error(_remover.msj);
+                 }
+              }
+
+            });
+            */
+        });
+        $('.btn-warning').click(function(){
+            event.preventDefault();
+            console.log(event.target.parentNode.parentNode);
+        });
+
+    
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <footer class="foot"><p> Creado por Mario Acevedo</p></footer>
 </body>
+
 </html>

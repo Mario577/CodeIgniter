@@ -16,16 +16,13 @@ class Listas extends CI_Controller
 
         $datos = $this->empleadomodelo->getmodelo_bydui("");
 
-        $info1 = $this->empleadomodelo->clientes();
-
-        $data = array('empleados' => $datos, 'infoclientes' => $info1);
+        $data = array('empleados' => $datos);
 
         $this->load->view('usuarios', $data);
     }
 
     public function Guardar()
     {
-
         $document = $this->input->post('dui');
         $name = $this->input->post('nombre');
         $age = $this->input->post('edad');
@@ -36,8 +33,7 @@ class Listas extends CI_Controller
         }
         $usuarios['sms'] = 'usuario añadido';
         $datos = $this->empleadomodelo->getmodelo_bydui();
-        $info1 = $this->empleadomodelo->clientes();
-        $data = array('empleados' => $datos, 'infoclientes' => $info1);
+        $data = array('empleados' => $datos);
         $this->load->view('usuarios', $data, $usuarios);
     }
     /*---------------------------------------------------------------------------*/
@@ -78,9 +74,8 @@ class Listas extends CI_Controller
 
         $datos = $this->empleadomodelo->getmodelo_bydui("");
 
-        $info1 = $this->empleadomodelo->clientes();
 
-        $data = array('empleados' => $datos, 'infoclientes' => $info1);
+        $data = array('empleados' => $datos);
 
         $this->load->view('agregarnuevo2', $data);
     }
@@ -106,114 +101,148 @@ class Listas extends CI_Controller
         echo json_encode($usuarios);
         return;
     }
-
+/*--------------------------------------------------------------------------------------*/
     public function tablausuarios3()
     {
 
-        $listado = $this->empleadomodelo->tabla();
-
         $this->load->library('table');
-        $template = array('table_open' => '<table  class="table" id="tabla1">');
+        $listado = $this->empleadomodelo->tabla();
+        $template = array('table_open' => '<table  class="table table-bordered" id="tabla1">');
         $this->table->set_template($template);
-        $this->table->set_heading(array('data1' => 'Dui', 'data2' => 'Nombre', 'data3' => 'Edad',));
-        $socios['tabla_datos'] = $this->table->generate($listado);
-
-        $this->table->clear();
-
+        $this->table->set_heading('Dui', 'Nombre', 'Edad');
+        foreach ($listado as $fila) {
+            $this->table->add_row($fila->dui,$fila->nombre,$fila->edad,
+            "<button type='button' class='btn btn-danger' data-toggle='modal' data-target='.bs-example-modal-sm'>Eliminar</button>
+            <div class='modal fade bs-example-modal-sm' tabindex='-1' role='dialog' aria-labelledby='mySmallModalLabel'>
+              <div class='modal-dialog modal-sm' role='document'>
+                <div class='modal-content'>
+                  Estas seguro que deseas eliminar este usuario ?
+                  <button id='eliminar' class='btn-danger' name='eliminar'> Eliminar </button>
+                </div>
+              </div>
+            </div>",
+            "<button id='modificar' class='btn-warning' name='modificar'> Modificar </button>");
+        };
+        $socios['tabla_datos'] = $this->table->generate();
         $this->load->view('agregarnuevo3', $socios);
     }
 
     public function guardar_by_ajax3()
     {
-
         $document = $this->input->post('dui');
         $name = $this->input->post('nombre');
         $age = $this->input->post('edad');
         $datos = array('dui' => $document, 'nombre' => $name, 'edad' => $age);
+       
+            if (!$this->empleadomodelo->insertar($datos)) {
+                $usuarios['respuesta'] = false;
+                $usuarios['msj'] = 'Ocurrio un error en con los datos del usuario';
+            } else {
+                $this->load->library('table');
+                $listado = $this->empleadomodelo->tabla();
+                $template = array('table_open' => '<table  class="table table-bordered" id="tabla1">');
+                $this->table->set_template($template);
+                $this->table->set_heading('Dui', 'Nombre', 'Edad');
+                foreach ($listado as $fila) {
+                $this->table->add_row($fila->dui,$fila->nombre,$fila->edad,"<button id='eliminar' class='btn-danger' name='eliminar'> Eliminar </button>", "<button id='modificar' class='btn-warning' name='modificar'> Modificar </button>");
+                };
+                $usuarios['tabla_datos'] = $this->table->generate();
+                $usuarios['respuesta'] = true;
+                $usuarios['msj'] = $name . ' ha sido agregado a la base de datos';
+            }
+            echo json_encode($usuarios);
+            return;
+            }
+            public function eliminar(){
+                $eliminar = $this->input->post('eliminar');
+                $datob = array('eliminar'=>$eliminar);
+                if(!$this->empleadomodelo->delete($datob)) {
+                    $info['respuesta'] = false;
+                    $info['msj'] = 'Ocurrio un error al eliminar al usuario';
+                }else{
+                    $datob = $this->empleadomodelo->getmodelo_bydui("");
+                    $info['tabla']= $datob;
+                    $info['respuesta']= true;
+                    $info['msj']= 'El usuario fue eliminado con exito';
+                }
+                echo json_encode($info);
+                return;
+            }
+        
+    
 
-        if (!$this->empleadomodelo->insertar($datos)) {
-            $usuarios['respuesta'] = false;
-            $usuarios['msj'] = 'Ocurrio un error en con los datos del usuario';
-        } else {
-
-            $this->load->library('table');
-            $listado = $this->empleadomodelo->tabla();
-            $template = array('table_open' => '<table  class="table" id="tabla1">');
-            $this->table->set_template($template);
-            $this->table->set_heading('Dui','Nombre','Edad');
-            $usuarios['tabla_datos'] = $this->table->generate($listado);
-            $usuarios['respuesta'] = true;
-            $usuarios['msj'] = $name . ' ha sido agregado a la base de datos';
-        }
-        echo json_encode($usuarios);
-        return;
-    }
-
-//-----------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------
 
 
-    public function proyecto_css(){
-
-        $listado = $this->empleadomodelo->tabla();
+    public function proyecto_css()
+    {
 
         $this->load->library('table');
-        $template = array('table_open' => '<table  class="table table-bordered table-striped"  id="tabla1">',
-        'thead_open'            => '<thead>',
-        'thead_close'           => '</thead>',
-
-        'heading_row_start'     => '<tr class="success">',
-        'heading_row_end'       => '</tr>',
-        'heading_cell_start'    => '<th>',
-        'heading_cell_end'      => '</th>',
-
-        'tbody_open'            => '<tbody>',
-        'tbody_close'           => '</tbody>',
-
-        'row_start'             => '<tr>',
-        'row_end'               => '</tr>',
-        'cell_start'            => '<td>',
-        'cell_end'              => '</td>',
-
-        'row_alt_start'         => '<tr>',
-        'row_alt_end'           => '</tr>',
-        'cell_alt_start'        => '<td>',
-        'cell_alt_end'          => '</td>',);
+        $listado = $this->empleadomodelo->tabla();
+        $template = array('table_open' => '<table  class="table table-bordered" id="tabla1">');
         $this->table->set_template($template);
-        $this->table->set_heading(array('data1' => 'Dui', 'data2' => 'Nombre', 'data3' => 'Edad',));
-        $socios['tabla_datos'] = $this->table->generate($listado);
-
-        $this->table->clear();
+        $this->table->set_heading('Dui', 'Nombre', 'Edad');
+        foreach ($listado as $fila) {
+            $this->table->add_row($fila->dui,$fila->nombre,$fila->edad,
+            "<button type='button' class='btn btn-danger' data-toggle='modal' data-target='.bs-example-modal-sm'>Eliminar</button>
+            <div class='modal fade bs-example-modal-sm' tabindex='-1' role='dialog' aria-labelledby='mySmallModalLabel'>
+              <div class='modal-dialog modal-sm' role='document'>
+                <div class='modal-content'>
+                  Estas seguro que deseas eliminar este usuario ?<br>
+                  <br>
+                  <a class='fcc-btn' href=http://localhost/CodeIgniter/index.php/Listas/eliminar_css?listado=fila>Eliminar</a>
+                </div>
+              </div>
+            </div>",
+            "<button id='modificar' class='btn-warning' name='modificar'> Modificar </button>");
+        };
+        $socios['tabla_datos'] = $this->table->generate();
         $this->load->view('nuevoproyecto', $socios);
     }
 
 
-//----------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------
 
 
 
 
-   public function Guardar_css(){
+    public function Guardar_css()
+    {
         $document = $this->input->post('dui');
         $name = $this->input->post('nombre');
         $age = $this->input->post('edad');
         $datos = array('dui' => $document, 'nombre' => $name, 'edad' => $age);
-
-        if (!$this->empleadomodelo->insertar($datos)) {
-            $usuarios['respuesta'] = false;
-            $usuarios['msj'] = 'Ocurrio un error en con los datos del usuario';
-        } else {
-            $this->load->library('table');
-            $listado = $this->empleadomodelo->tabla();
-            $template = array('table_open' => '<table  class="table" id="tabla1">');
-            $this->table->set_template($template);
-            $this->table->set_heading('Dui','Nombre','Edad');
-            $usuarios['tabla_datos'] = $this->table->generate($listado);
-            $usuarios['respuesta'] = true;
-            $usuarios['msj'] = $name . ' ha sido agregado a la base de datos';
+       
+            if (!$this->empleadomodelo->insertar($datos)) {
+                $usuarios['respuesta'] = false;
+                $usuarios['msj'] = 'Ocurrio un error en con los datos del usuario';
+                $this->load->view('nuevoproyecto', $usuarios);
+            } else {
+                $this->load->library('table');
+                $listado = $this->empleadomodelo->tabla();
+                $template = array('table_open' => '<table  class="table table-bordered" id="tabla1">');
+                $this->table->set_template($template);
+                $this->table->set_heading('Dui', 'Nombre', 'Edad');
+                foreach ($listado as $fila) {
+                $this->table->add_row($fila->dui,$fila->nombre,$fila->edad,"<button id='eliminar' class='btn-danger' name='eliminar'> Eliminar </button>", "<button id='modificar' class='btn-warning' name='modificar'> Modificar </button>");
+                };
+                $usuarios['tabla_datos'] = $this->table->generate();
+                $usuarios['respuesta'] = true;
+                $usuarios['msj'] = $name . ' ha sido agregado a la base de datos';
+                $this->load->view('nuevoproyecto', $usuarios);
+            }
+    }
+    public function eliminar_css()
+    {
+        $datob = $_GET['dui'];
+        echo $datob;
+        $resultado = $this->empleadomodelo->getmodelo_bydui($datob);
+        if(count($resultado) == 'dui')
+        {
+            $this->empleadomodelo->delete($datob);
+            $this->load->view('nuevoproyecto');
         }
-        echo json_encode($usuarios);
-        return;
     }
 
-
+    
 }
