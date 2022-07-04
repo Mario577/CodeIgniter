@@ -38,4 +38,11 @@ class Empleadomodelo extends CI_Model
     }
     return true;
   }
+
+  public function actualizar(){
+    if(!$this->db->update("clientes",)){
+      return false;
+    }
+    return true;
+  }
 }
