@@ -173,7 +173,7 @@ class Listas extends CI_Controller
         $this->table->set_template($template);
         $this->table->set_heading('Dui', 'Nombre', 'Edad');
         foreach ($listado as $fila) {
-            $this->table->add_row($fila->dui, $fila->nombre, $fila->edad, "<button type='button' class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' data-dui='$fila->dui'>Eliminar</button>", "<a class='btn btn-warning' href='http://localhost/CodeIgniter/index.php/Listas/update_css'>Modificar</a>");
+            $this->table->add_row($fila->dui, $fila->nombre, $fila->edad, "<button type='button' class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' data-dui='$fila->dui'>Eliminar</button>", "<a class='btn btn-warning' href='http://localhost/CodeIgniter/index.php/Listas/vista_css'>Modificar</a>");
         };
         $socios['tabla_datos'] = $this->table->generate();
         $this->load->view('nuevoproyecto', $socios);
@@ -203,7 +203,7 @@ class Listas extends CI_Controller
             $this->table->set_template($template);
             $this->table->set_heading('Dui', 'Nombre', 'Edad');
             foreach ($listado as $fila) {
-                $this->table->add_row($fila->dui, $fila->nombre, $fila->edad, "<button type='button' class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' data-dui='$fila->dui'>Eliminar</button>", "<a class='btn btn-warning' href='http://localhost/CodeIgniter/index.php/Listas/update_css'>Modificar</a>");
+                $this->table->add_row($fila->dui, $fila->nombre, $fila->edad, "<button type='button' class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' data-dui='$fila->dui'>Eliminar</button>", "<a class='btn btn-warning' href='http://localhost/CodeIgniter/index.php/Listas/vista_css'>Modificar</a>");
             };
             $usuarios['tabla_datos'] = $this->table->generate();
             $usuarios['respuesta'] = true;
@@ -228,31 +228,32 @@ class Listas extends CI_Controller
             $this->table->set_template($template);
             $this->table->set_heading('Dui', 'Nombre', 'Edad');
             foreach ($listado as $fila) {
-                $this->table->add_row($fila->dui, $fila->nombre, $fila->edad, "<button type='button' class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' data-dui='$fila->dui'>Eliminar</button>", "<a class='btn btn-warning' href='http://localhost/CodeIgniter/index.php/update_css'>Modificar</a>");
+                $this->table->add_row($fila->dui, $fila->nombre, $fila->edad, "<button type='button' class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' data-dui='$fila->dui'>Eliminar</button>", "<a class='btn btn-warning' href='http://localhost/CodeIgniter/index.php/Listas/vista_css'>Modificar</a>");
             };
             $usuarios['tabla_datos'] = $this->table->generate();
             $this->load->view('nuevoproyecto', $usuarios);
         }
     }
-
-
-    public function update_css()
-    {
+    public function vista_css(){
         $this->load->library('table');
         $listado = $this->empleadomodelo->tabla();
         $template = array('table_open' => '<table  class="table table-bordered" id="tabla1">');
         $this->table->set_template($template);
         $this->table->set_heading('Dui', 'Nombre', 'Edad');
         foreach ($listado as $fila) {
-            $this->table->add_row($fila->dui, $fila->nombre, $fila->edad);
+            $this->table->add_row($fila->dui, $fila->nombre, $fila->edad, "<button type='button' class='btn btn-warning' data-toggle='modal' data-target='#exampleModal' data-dui='$fila->dui', data-nombre='$fila->nombre', data-edad='$fila->edad'>Modificar</button>", "<a class='btn btn-info' href='http://localhost/CodeIgniter/index.php/Listas/proyecto_css'>Inicio</a>");
         };
         $socios['tabla_datos'] = $this->table->generate();
         $this->load->view('actualizar_css', $socios);
+    }
 
-       /* $document = $this->input->post('dui');
+
+    public function update_css(){
+
+        $document = $this->input->post('dui');
         $name = $this->input->post('nombre');
         $age = $this->input->post('edad');
-        if (!$this->empleadomodelo->actualizar($document, $name, $age)) {
+        if (!$this->empleadomodelo->actualizar($document, $name,$age)) {
             echo "<script> alert('No se pudo actualizar el usuario') </script>";
             $this->load->view('actualizar_css');
         } else {
@@ -263,10 +264,10 @@ class Listas extends CI_Controller
             $this->table->set_template($template);
             $this->table->set_heading('Dui', 'Nombre', 'Edad');
             foreach ($listado as $fila) {
-                $this->table->add_row($fila->dui, $fila->nombre, $fila->edad);
+                $this->table->add_row($fila->dui, $fila->nombre, $fila->edad, "<button type='button' class='btn btn-danger' data-toggle='modal' data-target='#exampleModal' data-dui='$fila->dui'>Eliminar</button>", "<button type='button' class='btn btn-warning' data-toggle='modal' data-target='#exampleModal' data-dui='$fila->dui', data-nombre='$fila->nombre', data-edad='$fila->edad'>Modificar</button>");
             };
             $socios['tabla_datos'] = $this->table->generate();
             $this->load->view('nuevoproyecto', $socios);
-        }*/
+        }
     }
 }

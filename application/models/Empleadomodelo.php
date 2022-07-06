@@ -39,8 +39,15 @@ class Empleadomodelo extends CI_Model
     return true;
   }
 
-  public function actualizar(){
-    if(!$this->db->update("clientes",)){
+  public function actualizar($document, $name, $age){
+    // echo $document;
+    // throw new Exception("Error Processing Request", 1);
+    
+    $this->db->where('dui',$document);
+    $this->db->set('dui', $document);
+    $this->db->set('nombre', $name);
+    $this->db->set('edad', $age);
+    if(!$this->db->update("clientes")){
       return false;
     }
     return true;
