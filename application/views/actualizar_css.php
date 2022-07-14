@@ -52,16 +52,19 @@
                 <form method="POST" action="http://localhost/CodeIgniter/index.php/Listas/update_css">
                 <div class="modal-body">
                         <div class="form-group">
-                            <label for="recipient-name" class="control-label">dui</label>
-                            <input type="text" class="form-control" id="recipient-dui" name="dui">
+                            <input type="hidden" class="form-control" id="recipient-andui" name="andui">
                         </div>
                         <div class="form-group">
-                            <label for="recipient-name" class="control-label">nombre</label>
-                            <input type="text" class="form-control" id="recipient-name" name="nombre">
+                            <label for="recipient-name" class="control-label">Nuevo dui</label>
+                            <input type="text" class="form-control" id="recipient-dui" name="dui" minlength="10" maxlength="10"/>
                         </div>
                         <div class="form-group">
-                            <label for="recipient-name" class="control-label">edad</label>
-                            <input type="text" class="form-control" id="recipient-age" name="edad">
+                            <label for="recipient-name" class="control-label">Nuevo nombre</label>
+                            <input type="text" class="form-control" id="recipient-name" name="nombre" onkeypress="return !(event.charCode >= 48 && event.charCode <= 57)"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">Nueva edad</label>
+                            <input type="text" class="form-control" id="recipient-age" name="edad" maxlength="2" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -84,6 +87,7 @@
             var edad = button.data('edad')
             var modal = $(this)
             modal.find('.modal-title').text('Actualizar usuario ' + dui)
+            modal.find('.modal-body #recipient-andui').val(dui)
             modal.find('.modal-body #recipient-dui').val(dui)
             modal.find('.modal-body #recipient-name').val(nombre)
             modal.find('.modal-body #recipient-age').val(edad)

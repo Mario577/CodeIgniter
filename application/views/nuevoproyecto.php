@@ -6,22 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0 , maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <title>Vista</title>
   <style>
-    .btn {
-      size: small;
-    }
-
-    .fcc-btn {
-      background-color: #FF0505F1;
-      color: white;
-      padding: 10px 25px;
-      text-decoration: none;
-    }
-
-    .fcc-btn:hover {
-      background-color: #223094;
-    }
-    
   </style>
 </head>
 
@@ -29,7 +15,7 @@
   <div class="page-header">
     <h1 class="bg-success text-danger">Tabla Usuarios<small> V.0.2.1</small></h1>
   </div>
-  <?= isset($sms) ? $sms : '' ?>
+  <?= isset($msj) ? $msj : '' ?>
   </div>
 
   <div class="container">
@@ -57,19 +43,19 @@
     <form id="form_1" method="post" action="http://localhost/CodeIgniter/index.php/Listas/Guardar_css">
       <div class="form-group has-success">
         <label class="control-label">Ingresa tu Informacion</label>
-        <input type="text" class="form-control" name="dui" id="dui" aria-describedby="helpBlock2">
-        <span class="help-block">Debe contener 9 caracteres numericos</span>
+        <input type="text" class="form-control" name="dui" id="dui" placeholder="Dui:" aria-describedby="helpBlock2" minlength="10" maxlength="10">
+        <span class="help-block">Debe contener 10 caracteres numericos</span>
       </div>
       <div class="form-group has-success">
         <label class="control-label"></label>
-        <input type="text" class="form-control" name="nombre" id="nombre">
-        <span class="help-block">Debe contener Nombre y Apellidos</span>
+        <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre:" onkeypress="return !(event.charCode >= 48 && event.charCode <= 57)"/>
+        <span class="help-block">Debe contener un Nombre</span>
       </div>
       <div class="form-group has-success">
         <label class="control-label"></label>
-        <input type="number" name="edad" class="form-control" id="edad">
+        <input type="number" name="edad" class="form-control" placeholder="Edad:" id="edad" maxlength="2" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"/>
         <span class="help-block">Ingresa tu Edad</span>
-        <input type="submit" value="Guardar" id="Guardar" />
+        <input type="submit" class="btn btn-success" value="Guardar" id="Guardar" />
       </div>
     </form>
   </div>
@@ -86,7 +72,7 @@
       modal.find('.modal-body input').val(recipient)
     })
   </script>
-  <title>Vista</title>
+  
 </body>
 
 </html>

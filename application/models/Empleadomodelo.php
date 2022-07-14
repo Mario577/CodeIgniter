@@ -39,11 +39,11 @@ class Empleadomodelo extends CI_Model
     return true;
   }
 
-  public function actualizar($document, $name, $age){
+  public function actualizar($anterior, $document, $name, $age){
     // echo $document;
     // throw new Exception("Error Processing Request", 1);
     
-    $this->db->where('dui',$document);
+    $this->db->where('dui',$anterior);
     $this->db->set('dui', $document);
     $this->db->set('nombre', $name);
     $this->db->set('edad', $age);
@@ -52,4 +52,18 @@ class Empleadomodelo extends CI_Model
     }
     return true;
   }
+
+  public function sesion($usuario, $contraseña){
+
+    $this->db->where('usuario', $usuario);
+    $this->db->where('contraseña', $contraseña);
+    $validar = $this->db->get('permisos');
+    if($validar->num_rows()>0){
+        return TRUE;
+    }else{
+        return FALSE;
+    }
+  }
+
+
 }
