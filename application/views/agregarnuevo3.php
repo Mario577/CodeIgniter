@@ -144,6 +144,7 @@
             modal.find('.modal-title').text('Desea eliminar el Dui: ' + recipient)
             modal.find('.modal-body input').val(recipient)
         });
+        
         $('#exampleModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
             var dui = button.data('dui')
