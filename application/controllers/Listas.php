@@ -411,27 +411,6 @@ class Listas extends CI_Controller
         }
     }
 
-    public function comprobar_css(){
-        $usuario = $this->input->post('usuario');
-        $contraseña = $this->input->post('contraseña');
-        $contraseña_cifrada= password_hash($contraseña, PASSWORD_BCRYPT, ['cost' => 10]);
-        if(isset($contraseña_cifrada)){
-            if($this->empleadomodelo->sesion($usuario, ($contraseña_cifrada))){
-            header("Location: http://localhost/CodeIgniter/index.php/Listas/proyecto_css", TRUE, 301);
-            exit();
-            }
-            header("Location: http://localhost/CodeIgniter/index.php/Listas/comprobar_css", TRUE, 301);
-            echo "<script>Usuario y contraseña incorrectos</script>";
-            exit();
-                
-        }
-        $this->load->view('iniciar_sesion');
-    }
+}
 
 //-----------------------------------------------------------------------------------------------------------------------------
-
-    public function proyecto_crud(){
-        $this->load->view('crud_ajax');
-    }
-    
-}
